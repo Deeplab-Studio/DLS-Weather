@@ -1,6 +1,6 @@
 {
   "name": "DLSWeather",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Universal ESP32 weather API client for DLS Weather platform",
   "keywords": ["weather", "esp32", "api", "iot"],
   "repository": {

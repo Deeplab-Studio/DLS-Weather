@@ -34,12 +34,10 @@ bool DLSWeather::send(unsigned long timestamp) {
         return false;
     }
 
-    // Use NetworkClientSecure for ESP32 Core 3.x+ (or WiFiClientSecure for older)
-    // Since we are on core 3.x (from logs), we use NetworkClientSecure but mapped via header usually.
-    // Let's safe bet with generic WiFiClientSecure and setInsecure.
-    
-    NetworkClientSecure client;
+    // Explicitly use WiFiClientSecure for compatibility check
+    WiFiClientSecure client;
     client.setInsecure(); // Skip certificate validation
+    client.setHandshakeTimeout(30); // Increase timeout for slow SSL
     
     HTTPClient http;
     http.begin(client, "https://wx-api.deeplabstudio.com/v1/ingest/weather");
