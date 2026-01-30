@@ -23,6 +23,7 @@ public:
     void rainDaily(float val);
 
     bool send(unsigned long timestamp);
+    int getLastCode();
 
 private:
     String _stationId;
@@ -39,6 +40,7 @@ private:
     float _rainRate;
     float _rainDaily;
     int _airQuality;
+    int _lastCode = 0;
 };
 
 #endif

@@ -78,6 +78,7 @@ bool DLSWeather::send(unsigned long timestamp) {
     Serial.println(jsonOutput);
 
     int httpResponseCode = http.POST(jsonOutput);
+    _lastCode = httpResponseCode;
 
     bool success = false;
     if (httpResponseCode > 0) {
@@ -93,4 +94,8 @@ bool DLSWeather::send(unsigned long timestamp) {
     
     http.end();
     return success;
+}
+
+int DLSWeather::getLastCode() {
+    return _lastCode;
 }
