@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 #include <HTTPClient.h>
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 
 class DLSWeather {
 public:
@@ -27,6 +28,7 @@ public:
     void solar(float val);
 
     bool send(unsigned long timestamp);
+    int getLastCode();
 
 private:
     String _stationId;
@@ -47,6 +49,8 @@ private:
     int _battery;
     float _voltage;
     float _solar;
+    
+    int _lastCode;
 };
 
 #endif

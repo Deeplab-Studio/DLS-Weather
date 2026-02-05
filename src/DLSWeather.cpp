@@ -20,6 +20,8 @@ DLSWeather::DLSWeather(String stationId, String apiKey, float lat, float lon) {
     _battery = -1;
     _voltage = NAN;
     _solar = NAN;
+    
+    _lastCode = 0;
 }
 
 void DLSWeather::temperature(float val) { _temp = val; }
@@ -41,8 +43,13 @@ bool DLSWeather::send(unsigned long timestamp) {
         return false;
     }
 
+    // Explicitly use WiFiClientSecure for compatibility check
+    WiFiClientSecure client;
+    client.setInsecure(); // Skip certificate validation
+    client.setHandshakeTimeout(30); // Increase timeout for slow SSL
+    
     HTTPClient http;
-    http.begin("https://wx-api.deeplabstudio.com/v1/ingest/weather");
+    http.begin(client, "https://wx-api.deeplabstudio.com/v1/ingest/weather");
     http.addHeader("Content-Type", "application/json");
     if (_apiKey.length() > 0) {
         http.addHeader("x-api-key", _apiKey);
@@ -93,6 +100,7 @@ bool DLSWeather::send(unsigned long timestamp) {
     Serial.println(jsonOutput);
 
     int httpResponseCode = http.POST(jsonOutput);
+    _lastCode = httpResponseCode;
 
     bool success = false;
     if (httpResponseCode > 0) {
@@ -108,4 +116,8 @@ bool DLSWeather::send(unsigned long timestamp) {
     
     http.end();
     return success;
+}
+
+int DLSWeather::getLastCode() {
+    return _lastCode;
 }
