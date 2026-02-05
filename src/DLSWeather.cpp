@@ -16,6 +16,10 @@ DLSWeather::DLSWeather(String stationId, String apiKey, float lat, float lon) {
     _rainRate = NAN;
     _rainDaily = NAN;
     _airQuality = -1;
+    
+    _battery = -1;
+    _voltage = NAN;
+    _solar = NAN;
 }
 
 void DLSWeather::temperature(float val) { _temp = val; }
@@ -27,6 +31,9 @@ void DLSWeather::windSpeed(float val) { _windSpd = val; }
 void DLSWeather::windDirection(float val) { _windDir = val; }
 void DLSWeather::rainRate(float val) { _rainRate = val; }
 void DLSWeather::rainDaily(float val) { _rainDaily = val; }
+void DLSWeather::battery(int val) { _battery = val; }
+void DLSWeather::voltage(float val) { _voltage = val; }
+void DLSWeather::solar(float val) { _solar = val; }
 
 bool DLSWeather::send(unsigned long timestamp) {
     if (WiFi.status() != WL_CONNECTED) {
@@ -69,6 +76,14 @@ bool DLSWeather::send(unsigned long timestamp) {
         JsonObject rain = doc["rain"].to<JsonObject>();
         if (!isnan(_rainRate)) rain["rate"] = _rainRate;
         if (!isnan(_rainDaily)) rain["daily"] = _rainDaily;
+    }
+
+    // Power
+    if (_battery != -1 || !isnan(_voltage) || !isnan(_solar)) {
+        JsonObject power = doc["power"].to<JsonObject>();
+        if (_battery != -1) power["battery"] = _battery;
+        if (!isnan(_voltage)) power["voltage"] = _voltage;
+        if (!isnan(_solar)) power["solar"] = _solar;
     }
 
     String jsonOutput;

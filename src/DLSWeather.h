@@ -22,6 +22,10 @@ public:
     void rainRate(float val);
     void rainDaily(float val);
 
+    void battery(int val);
+    void voltage(float val);
+    void solar(float val);
+
     bool send(unsigned long timestamp);
 
 private:
@@ -39,6 +43,10 @@ private:
     float _rainRate;
     float _rainDaily;
     int _airQuality;
+
+    int _battery;
+    float _voltage;
+    float _solar;
 };
 
 #endif
