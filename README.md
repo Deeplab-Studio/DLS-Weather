@@ -1,5 +1,7 @@
 # DLSWeather Library
 
+[![Sponsor](https://img.shields.io/badge/Sponsor-Deeplab--Studio-ea4aaa?style=for-the-badge&logo=github-sponsors)](https://github.com/sponsors/Deeplab-Studio)
+
 Universal ESP32 weather API client for the **DLS Weather** platform. This library is designed to be lightweight, hardware-agnostic, and compatible with any internet-connected ESP32 board.
 
 ## Features
