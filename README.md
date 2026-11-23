@@ -17,7 +17,7 @@ Add the following to your `platformio.ini`:
 
 ```ini
 lib_deps =
-    https://github.com/Deeplab-Studio/DLSWeather
+    https://github.com/Deeplab-Studio/DLS-Weather
 ```
 
 ## Basic Usage

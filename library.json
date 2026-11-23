@@ -5,7 +5,7 @@
   "keywords": ["weather", "esp32", "api", "iot"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Deeplab-Studio/DLSWeather"
+    "url": "https://github.com/Deeplab-Studio/DLS-Weather"
   },
   "authors": [
     {
