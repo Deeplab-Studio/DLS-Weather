@@ -38,6 +38,7 @@ void DLSWeather::voltage(float val) { _voltage = val; }
 void DLSWeather::solar(float val) { _solar = val; }
 
 bool DLSWeather::send(unsigned long timestamp) {
+    _lastCode = HTTPC_ERROR_NOT_CONNECTED;
     if (WiFi.status() != WL_CONNECTED) {
         Serial.println("[DLS] Error: WiFi not connected");
         return false;
@@ -49,7 +50,10 @@ bool DLSWeather::send(unsigned long timestamp) {
     client.setHandshakeTimeout(30); // Increase timeout for slow SSL
     
     HTTPClient http;
-    http.begin(client, "https://wx-api.deeplabstudio.com/v1/ingest/weather");
+    if (!http.begin(client, "https://wx-api.deeplabstudio.com/v1/ingest/weather")) {
+        Serial.println("[DLS] Error: HTTP client setup failed");
+        return false;
+    }
     http.addHeader("Content-Type", "application/json");
     if (_apiKey.length() > 0) {
         http.addHeader("x-api-key", _apiKey);

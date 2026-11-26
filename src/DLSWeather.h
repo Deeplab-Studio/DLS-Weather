@@ -28,6 +28,7 @@ public:
     void solar(float val);
 
     bool send(unsigned long timestamp);
+    // HTTP status or negative HTTPClient error from the latest send; 0 before the first send.
     int getLastCode();
 
 private:
